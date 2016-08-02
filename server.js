@@ -3,16 +3,14 @@ const bodyParser = require('body-parser')
 const spawn = require('child_process').spawn
 const app = express()
 
-app.use(express.static(__dirname + '/'))
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', function(req, res){
-	res.sendFile('index.html')
+app.get('/proxy_tester', function(req, res){
+	res.sendFile(__dirname + '/index.html')
 })
 
-app.post('/proxy-check', function(req, res){
+app.post('/proxy_tester/check', function(req, res){
 	const script = spawn('./run.sh', [req.body.host, req.body.port])
 
 	script.stdout.on('data', function(data){
@@ -27,6 +25,6 @@ app.post('/proxy-check', function(req, res){
 	})
 })
 
-app.listen(8080, function(){
-	console.log('Listening on port 8080...')
+app.listen(9000, function(){
+	console.log('Listening on port 9000...')
 })

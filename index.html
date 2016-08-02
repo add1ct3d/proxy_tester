@@ -129,7 +129,7 @@
 
 				$('#refresh-icon').css('display', 'block')
 				
-				$.post('/proxy-check', $('form').serialize(), ajaxsuccess)
+				$.post('/proxy_tester/check', $('form').serialize(), ajaxsuccess)
 				
 				e.preventDefault()
 			})

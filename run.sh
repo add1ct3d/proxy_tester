@@ -3,7 +3,7 @@
 if [ "$#" -ne 2 ]; then
 	echo "{\"summary\": \"You didn't provide enough argument\"}"
 else
-	if ! [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]$ ]]; then
+	if ! [[ $1 =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 		if ! [[ $1 =~ ^[a-zA-Z0-9]+\.[a-zA-Z]+$ ]]; then
 			echo "{\"summary\": \"Host is not valid\"}"
 			exit 1
@@ -15,7 +15,7 @@ else
 		exit 1
 	fi
 
-	curl -I -x http://$1:$2 http://shiuhsenang.com &> /dev/null
+	curl -I -v -x http://$1:$2 http://shiuhsenang.com &> /dev/null
 
 	if [ "$?" -eq 0 ]; then
 		output="$(cat /var/log/nginx/access.log | grep $1 | tail -1)"
