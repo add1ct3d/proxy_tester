@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proxy Tester</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<style type="text/css">
+		*{
+			font-family: "Roboto", sans_serif;
+			box-sizing: border-box;
+		}
+		h1, h2, h3, h4, h5, h6{
+			text-align: center;
+		}
+		.form-div div[class^="col-md-"]{
+			padding: 0;
+		}
+		.form-div input, .form-div button{
+			border-radius: 0;
+		}
+		.result-div p{
+			text-align: center;
+		}
+		h1{
+			margin-top: 10%;
+			margin-bottom: 3%;
+		}
+		.form-div{
+			margin-bottom:3%;
+		}
+		table, .refresh-icon{
+			display:none;
+		}
+		#error{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Proxy Tester</h1>
+		<div class="row form-div">
+			<form>
+				<div class="col-md-3 col-md-offset-3">
+					<input type="text" class="form-control" placeholder="Hostname e.g. 1.2.3.4" name="host">
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control" placeholder="Port e.g. 8080" name="port">
+				</div>
+				<div class="col-md-1">
+					<button class="btn btn-default" type="button">Check</button>
+				</div>
+			</form>
+		</div>
+		<div class="row result-div">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>Result</h2>
+				<h1 id="refresh-icon"><i class="fa fa-refresh"></i></h1>
+				<p>
+					<br>
+					<span id="summary"></span>
+					<br>
+					<button id="readmore">Read More</button>
+				</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>HTTP Header</th>
+							<th>Value</th>
+							<th>Analysis</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>X-Real-IP</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>X-Forwarded-For</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>Via</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row how-div">
+			<h3>How It Works</h3>
+			<div class="col-md-2 col-md-offset-3">
+				<p>Enter the proxy IP/hostname and port you want to test</p>
+			</div>
+			<div class="col-md-2">
+				<p>We browse a website that we control through the proxy</p>
+			</div>
+			<div class="col-md-2">
+				<p>We inspect the request headers and tell you the result</p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			const ajaxsuccess = function(data, status, xhr){
+				$('#refresh-icon').css('display', 'none')
+				if(status == 200){
+					$('#summary').html(data.summary)
+
+					$('table tbody tr:nth-child(1) td:nth-child(2)').html(data.x_real_ip)
+					$('table tbody tr:nth-child(1) td:nth-child(3)').html(data.x_real_ip_analysis)
+
+					$('table tbody tr:nth-child(2) td:nth-child(2)').html(data.x_forwarded_for)
+					$('table tbody tr:nth-child(2) td:nth-child(3)').html(data.x_forwarded_for_analysis)
+
+					$('table tbody tr:nth-child(3) td:nth-child(2)').html(data.via)
+					$('table tbody tr:nth-child(3) td:nth-child(3)').html(data.via_analysis)
+				}else{
+					$('.result-div .col-md-6').append('<p id="error"><strong>Server returns status ' + status + ' for the proxy requested</strong></p>')
+				}
+			}
+			$('form').submit(function(e){
+				$('#refresh-icon').css('display', '')
+				$.post('proxy-check', $('form').serialize(), ajaxsuccess)
+				e.preventDefault()
+			})
+			$('#button').click(function(){
+				$('#button').css('display', 'none')
+				$('table').css('display', '')
+			})
+		})
+
+	</script>
+</body>
+</html>
