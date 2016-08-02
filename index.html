@@ -26,7 +26,7 @@
 			text-align: center;
 		}
 		h1{
-			margin-top: 10%;
+			margin-top: 8%;
 			margin-bottom: 3%;
 		}
 		.form-div{
@@ -37,6 +37,9 @@
 		}
 		#error{
 			color:red;
+		}
+		.table{
+			width:100%;
 		}
 	</style>
 </head>
@@ -94,18 +97,6 @@
 				</table>
 			</div>
 		</div>
-		<div class="row how-div">
-			<h3>How It Works</h3>
-			<div class="col-md-2 col-md-offset-3">
-				<p>Enter the proxy IP/hostname and port you want to test</p>
-			</div>
-			<div class="col-md-2">
-				<p>We browse a website that we control through the proxy</p>
-			</div>
-			<div class="col-md-2">
-				<p>We inspect the request headers and tell you the result</p>
-			</div>
-		</div>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -113,8 +104,8 @@
 				$('#refresh-icon').css('display', 'none')
 
 				if(status == 'success'){
-					$('#summary').css('display', 'unset')
-					$('#readmore').css('display', 'unset')
+					$('#summary').css('display', 'block')
+					$('#readmore').css('display', 'inline')
 
 					$('#summary').html(data.summary)
 
@@ -127,17 +118,23 @@
 					$('table tbody tr:nth-child(3) td:nth-child(2)').html(data.via)
 					$('table tbody tr:nth-child(3) td:nth-child(3)').html(data.via_analysis)
 				}else{
-					$('.result-div .col-md-6').append('<p id="error"><strong>Server returns status \'' + status + '\' for the proxy requested</strong></p>')
+					$('#summary').html('Server returns status \'' + status + '\' for the proxy requested')
 				}
 			}
 			$('form').submit(function(e){
-				$('#refresh-icon').css('display', 'unset')
+				$('#summary').css('display', 'none')
+				$('table').css('display', 'none')
+				$('#readmore').css('display', 'none')
+
+				$('#refresh-icon').css('display', 'block')
+				
 				$.post('/proxy-check', $('form').serialize(), ajaxsuccess)
+				
 				e.preventDefault()
 			})
 			$('#readmore').click(function(){
 				$('#readmore').css('display', 'none')
-				$('table').css('display', 'unset')
+				$('table').css('display', 'block')
 			})
 		})
 

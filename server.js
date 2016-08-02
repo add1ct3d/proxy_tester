@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const spawn = require('child_process').spawn
 const app = express()
 
 app.use(express.static(__dirname + '/'))
@@ -12,17 +13,17 @@ app.get('/', function(req, res){
 })
 
 app.post('/proxy-check', function(req, res){
-	console.log('host: ' + req.body.host)
-	console.log('port: ' + req.body.port)
+	const script = spawn('./run.sh', [req.body.host, req.body.port])
 
-	res.json({
-		summary: 'a',
-		x_real_ip: 'b',
-		x_real_ip_analysis: 'c',
-		x_forwarded_for: 'd',
-		x_forwarded_for_analysis: 'e',
-		via: 'f',
-		via_analysis: 'g'
+	script.stdout.on('data', function(data){
+		const jsondata = JSON.parse(data)
+
+		res.json(jsondata)
+	})
+
+	script.stderr.on('data', function(data){
+		// console.log(data)
+		res.json({summary: "Ops, there is something wrong with this proxy check"})
 	})
 })
 
