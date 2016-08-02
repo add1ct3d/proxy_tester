@@ -12,6 +12,10 @@
 		*{
 			font-family: "Roboto", sans_serif;
 			box-sizing: border-box;
+			color:white;
+		}
+		body{
+			background-color: #333;
 		}
 		h1, h2, h3, h4, h5, h6{
 			text-align: center;
@@ -19,14 +23,14 @@
 		.form-div div[class^="col-md-"]{
 			padding: 0;
 		}
-		.form-div input, .form-div button{
+		.form-div input, .form-div button, #readmore{
 			border-radius: 0;
 		}
 		.result-div p{
 			text-align: center;
 		}
 		h1{
-			margin-top: 8%;
+			margin-top: 10%;
 			margin-bottom: 3%;
 		}
 		.form-div{
@@ -34,9 +38,6 @@
 		}
 		table, #refresh-icon, #summary, #readmore{
 			display:none;
-		}
-		#error{
-			color:red;
 		}
 		.table{
 			width:100%;
@@ -49,13 +50,13 @@
 		<div class="row form-div">
 			<form>
 				<div class="col-md-3 col-md-offset-3">
-					<input type="text" class="form-control" placeholder="Hostname e.g. 1.2.3.4" name="host">
+					<input type="text" class="form-control" placeholder="Host e.g. 1.2.3.4 (IP) or example.com (hostname)" name="host">
 				</div>
 				<div class="col-md-2">
 					<input type="text" class="form-control" placeholder="Port e.g. 8080" name="port">
 				</div>
 				<div class="col-md-1">
-					<button class="btn btn-default" type="submit">Check</button>
+					<button class="btn btn-success" type="submit">Check</button>
 				</div>
 			</form>
 		</div>
@@ -67,7 +68,7 @@
 					<br>
 					<span id="summary"></span>
 					<br>
-					<button id="readmore">Read More</button>
+					<button class="btn btn-success" id="readmore">Read More</button>
 				</p>
 				<table class="table">
 					<thead>
