@@ -1,0 +1,23 @@
+{
+  "name": "proxy_tester",
+  "version": "1.0.0",
+  "description": "Open source web application to check whether a proxy server is transparent, anonymous or elite",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/shiuhsenang92/proxy_tester.git"
+  },
+  "author": "Shiuh Sen Ang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shiuhsenang92/proxy_tester/issues"
+  },
+  "homepage": "https://github.com/shiuhsenang92/proxy_tester#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

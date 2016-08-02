@@ -32,7 +32,7 @@
 		.form-div{
 			margin-bottom:3%;
 		}
-		table, .refresh-icon{
+		table, #refresh-icon, #summary, #readmore{
 			display:none;
 		}
 		#error{
@@ -52,14 +52,14 @@
 					<input type="text" class="form-control" placeholder="Port e.g. 8080" name="port">
 				</div>
 				<div class="col-md-1">
-					<button class="btn btn-default" type="button">Check</button>
+					<button class="btn btn-default" type="submit">Check</button>
 				</div>
 			</form>
 		</div>
 		<div class="row result-div">
 			<div class="col-md-6 col-md-offset-3">
 				<h2>Result</h2>
-				<h1 id="refresh-icon"><i class="fa fa-refresh"></i></h1>
+				<h1 id="refresh-icon"><i class="fa fa-refresh fa-spin fa-fw"></i></h1>
 				<p>
 					<br>
 					<span id="summary"></span>
@@ -111,7 +111,11 @@
 		$(document).ready(function(){
 			const ajaxsuccess = function(data, status, xhr){
 				$('#refresh-icon').css('display', 'none')
-				if(status == 200){
+
+				if(status == 'success'){
+					$('#summary').css('display', 'unset')
+					$('#readmore').css('display', 'unset')
+
 					$('#summary').html(data.summary)
 
 					$('table tbody tr:nth-child(1) td:nth-child(2)').html(data.x_real_ip)
@@ -123,17 +127,17 @@
 					$('table tbody tr:nth-child(3) td:nth-child(2)').html(data.via)
 					$('table tbody tr:nth-child(3) td:nth-child(3)').html(data.via_analysis)
 				}else{
-					$('.result-div .col-md-6').append('<p id="error"><strong>Server returns status ' + status + ' for the proxy requested</strong></p>')
+					$('.result-div .col-md-6').append('<p id="error"><strong>Server returns status \'' + status + '\' for the proxy requested</strong></p>')
 				}
 			}
 			$('form').submit(function(e){
-				$('#refresh-icon').css('display', '')
-				$.post('proxy-check', $('form').serialize(), ajaxsuccess)
+				$('#refresh-icon').css('display', 'unset')
+				$.post('/proxy-check', $('form').serialize(), ajaxsuccess)
 				e.preventDefault()
 			})
-			$('#button').click(function(){
-				$('#button').css('display', 'none')
-				$('table').css('display', '')
+			$('#readmore').click(function(){
+				$('#readmore').css('display', 'none')
+				$('table').css('display', 'unset')
 			})
 		})
 
