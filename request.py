@@ -4,7 +4,12 @@ assert len(sys.argv) == 3
 
 proxy = 'http://{}:{}'.format(sys.argv[1], sys.argv[2])
 
+print proxy
+
 try:
-	requests.get('http://shiuhsenang.com', proxies = {'http': proxy}, timeout = 5)
+	r = requests.get('http://shiuhsenang.com', proxies = {'http': proxy}, timeout = 30)
+	print r
 except requests.exceptions.Timeout:
 	sys.exit(-1)
+except:
+	sys.exit(-100)
