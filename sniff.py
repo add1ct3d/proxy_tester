@@ -20,7 +20,7 @@ host = sys.argv[0]
 port = int(sys.argv[1])
 
 def callback(x):
-	if IP in x and x[IP].src = host and TCP in x and x[TCP].sport = port and Raw in x:
+	if IP in x and x[IP].src == host and TCP in x and x[TCP].sport == port and Raw in x:
 		raw = str(x[Raw])
 		
 		header = raw.split('\r\n\r\n')[0]
