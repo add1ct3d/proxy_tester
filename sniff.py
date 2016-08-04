@@ -1,4 +1,4 @@
-import sys, re, os
+import sys, re, os, json
 from scapy.all import *
 
 assert len(sys.argv) == 3
@@ -12,7 +12,21 @@ def callback(p):
 		
 		header = raw.split('\r\n\r\n')[0]
 
-		print header
+		d = dict()
+
+		for i, field in enumerate(header.split('\r\n')):
+			if i > 0:
+				d[field.split(': ')[0]] = field.split(': ')[1]
+
+		if 'X-Forwarded-For' in d:
+			d['summary'] = 'The proxy server ' + sys.argv[1] + ':' + sys.argv[2] + ' is transparent'
+		elif 'Via' in d:
+			d['summary'] = 'The proxy server ' + sys.argv[1] + ':' + sys.argv[2] + ' is anonymous'
+		elif:
+			d['summary'] = 'The proxy server ' + sys.argv[1] + ':' + sys.argv[2] + ' is elite anonymous'
+
+		json.dumps(d)
+		sys.exit(0)
 
 filter = 'tcp and host {} and port {}'.format(sys.argv[1], sys.argv[2])
 

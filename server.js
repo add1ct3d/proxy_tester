@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const spawn = require('child_process').spawn
+const exec = require('child_process').exec
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,17 +11,16 @@ app.get('/proxy_tester', function(req, res){
 })
 
 app.post('/proxy_tester/check', function(req, res){
-	const script = spawn('./run.sh', [req.body.host, req.body.port])
-
-	script.stdout.on('data', function(data){
-		const jsondata = JSON.parse(data)
-
-		res.json(jsondata)
+	const sniff = exec('python sniff.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
+		console.log(err)
+		console.log(stdout)
+		console.log(stderr)
 	})
 
-	script.stderr.on('data', function(data){
-		// console.log(data)
-		res.json({summary: "Ops, there is something wrong with this proxy check"})
+	const request = exec('python request.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
+		console.log(err)
+		console.log(stdout)
+		console.log(stderr)
 	})
 })
 
