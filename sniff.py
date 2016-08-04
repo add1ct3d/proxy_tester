@@ -1,7 +1,7 @@
 import sys, re, os, requests
 from scapy.all import *
 
-ERR_ARG_NUMBER		= 1
+ERR_ARG_COUNT		= 1
 ERR_ARG_INVALID 	= 2
 
 if len(sys.argv) != 2:
