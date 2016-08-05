@@ -25,7 +25,11 @@ app.post('/proxy_tester/check', function(req, res){
 		if(err){
 			res.json({'summary': err})
 		}else{
-			res.json(JSON.parse(stdout))
+			if(stdout.length == 0){
+				res.json({'summary': 'proxy connection timed out'})
+			}else{
+				res.json(JSON.parse(stdout))
+			}
 		}
 	})
 
