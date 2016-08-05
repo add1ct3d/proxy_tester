@@ -9,7 +9,9 @@ def callback(p):
 	if Raw in p:
 		raw = str(p[Raw])
 		
-		header = raw.split('\r\n\r\n')[1]
+		header = raw.split('\r\n\r\n')[0]
+
+		print header
 
 		d = dict()
 
