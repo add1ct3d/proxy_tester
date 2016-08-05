@@ -12,11 +12,11 @@ app.get('/proxy_tester', function(req, res){
 
 app.post('/proxy_tester/check', function(req, res){
 	// validate user input here
-	if(\^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$\.test(req.body.host) == false){
+	if(/^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/.test(req.body.host) == false){
 		res.json({'summary': 'invalid IP'})
 	}
 
-	if(\^[0-9]+$\){
+	if(/^[0-9]+$/.test(req.body.port) == false){
 		res.json({'summary': 'invalid port'})
 	}
 
