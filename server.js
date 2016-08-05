@@ -11,16 +11,18 @@ app.get('/proxy_tester', function(req, res){
 })
 
 app.post('/proxy_tester/check', function(req, res){
+	// validate user input here
+
 	const sniff = exec('python sniff.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
-		console.log(err)
-		console.log(stdout)
-		console.log(stderr)
+		console.log('err: ' + err)
+		console.log('stdout: ' + stdout)
+		console.log('stderr: ' + stderr)
 	})
 
-	const request = exec('python request.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
-		console.log(err)
-		console.log(stdout)
-		console.log(stderr)
+	const request = exec('curl -s -x ' + req.body.host + ':' + req.body.port + ' -m 20 shiuhsenang.com > /dev/null', function(err, stdout, stderr){
+		console.log('err: ' + err)
+		console.log('stdout: ' + stdout)
+		console.log('stderr: ' + stderr)
 	})
 })
 

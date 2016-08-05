@@ -24,7 +24,6 @@ def callback(p):
 		else:
 			d['summary'] = 'The proxy server ' + sys.argv[1] + ':' + sys.argv[2] + ' is elite anonymous'
 
-		print d
 		print json.dumps(d)
 		sys.exit(0)
 
