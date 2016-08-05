@@ -7,5 +7,6 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML
 
 try:
 	r = requests.get('http://shiuhsenang.com', headers = headers, proxies = {'http': proxy}, timeout = 20)
+	json.dumps(dict(r.headers))
 except:
 	json.dumps({'summary': 'request.py failed'})
