@@ -1,4 +1,4 @@
-import requests, sys
+import requests, sys, json
 
 assert len(sys.argv) == 3
 
@@ -8,4 +8,4 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML
 try:
 	print requests.get('http://shiuhsenang.com', headers = headers, proxies = {'http': proxy}, timeout = 20)
 except:
-	json.dumps('summary': 'request.py failed')
+	json.dumps({'summary': 'request.py failed'})
