@@ -12,7 +12,15 @@ app.get('/proxy_tester', function(req, res){
 
 app.post('/proxy_tester/check', function(req, res){
 	// validate user input here
+	if(\^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$\.test(req.body.host) == false){
+		res.json({'summary': 'invalid IP'})
+	}
 
+	if(\^[0-9]+$\){
+		res.json({'summary': 'invalid port'})
+	}
+
+	// start sniffing
 	const sniff = exec('/bin/bash run.sh ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
 		if(err){
 			res.json({'summary': err})
@@ -21,11 +29,10 @@ app.post('/proxy_tester/check', function(req, res){
 		}
 	})
 
+	// send request
 	const request = exec('python request.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
 		if(err){
 			res.json({'summary': err})
-		}else{
-			res.json(JSON.parse(stdout))
 		}
 	})
 })

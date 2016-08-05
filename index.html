@@ -75,26 +75,9 @@
 						<tr>
 							<th>HTTP Header</th>
 							<th>Value</th>
-							<th>Analysis</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>X-Real-IP</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>X-Forwarded-For</td>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>Via</td>
-							<td></td>
-							<td></td>
-						</tr>
-					</tbody>
+					<tbody></tbody>
 				</table>
 			</div>
 		</div>
@@ -109,22 +92,19 @@
 		$(document).ready(function(){
 			const ajaxsuccess = function(data, status, xhr){
 				$('#refresh-icon').css('display', 'none')
-				console.log(status, data)
 
 				if(status == 'success'){
 					$('#summary').css('display', 'block')
 					$('#readmore').css('display', 'inline')
 
 					$('#summary').html(data.summary)
+					$('tbody').html('')
 
-					$('table tbody tr:nth-child(1) td:nth-child(2)').html(data.x_real_ip)
-					$('table tbody tr:nth-child(1) td:nth-child(3)').html(data.x_real_ip_analysis)
-
-					$('table tbody tr:nth-child(2) td:nth-child(2)').html(data.x_forwarded_for)
-					$('table tbody tr:nth-child(2) td:nth-child(3)').html(data.x_forwarded_for_analysis)
-
-					$('table tbody tr:nth-child(3) td:nth-child(2)').html(data.via)
-					$('table tbody tr:nth-child(3) td:nth-child(3)').html(data.via_analysis)
+					for(i in data){
+						if(i != 'summary'){
+							$('tbody').append('<tr><td>' + i + '</td><td>' + data[i] + '</td></tr>')
+						}
+					}
 				}else{
 					$('#summary').html('Server returns status \'' + status + '\' for the proxy requested')
 				}
