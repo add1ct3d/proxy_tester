@@ -14,15 +14,19 @@ app.post('/proxy_tester/check', function(req, res){
 	// validate user input here
 
 	const sniff = exec('/bin/bash run.sh ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
-		console.log('err: ' + err)
-		console.log('stdout: ' + stdout)
-		console.log('stderr: ' + stderr)
+		if(err){
+			res.json({'summary': err})
+		}else{
+			res.json(JSON.parse(stdout))
+		}
 	})
 
 	const request = exec('python request.py ' + req.body.host + ' ' + req.body.port, function(err, stdout, stderr){
-		console.log('err: ' + err)
-		console.log('stdout: ' + stdout)
-		console.log('stderr: ' + stderr)
+		if(err){
+			res.json({'summary': err})
+		}else{
+			res.json(JSON.parse(stdout))
+		}
 	})
 })
 

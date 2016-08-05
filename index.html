@@ -109,6 +109,7 @@
 		$(document).ready(function(){
 			const ajaxsuccess = function(data, status, xhr){
 				$('#refresh-icon').css('display', 'none')
+				console.log(status, data)
 
 				if(status == 'success'){
 					$('#summary').css('display', 'block')
