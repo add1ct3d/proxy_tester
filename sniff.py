@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys, re, os, json
 from scapy.all import *
 
@@ -25,6 +27,6 @@ def callback(p):
 		print json.dumps(d)
 		sys.exit(0)
 
-filter = 'tcp and src host {} and dst port 80'.format(sys.argv[1])
+filter = 'tcp and src host {}'.format(sys.argv[1])
 
 sniff(filter = filter, prn = callback, store = 0, timeout = 30)

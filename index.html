@@ -116,7 +116,7 @@
 
 				$('#refresh-icon').css('display', 'block')
 				
-				$.post('/proxy_tester/check', $('form').serialize(), ajaxsuccess)
+				$.post('http://shiuhsenang.com:9000/check', $('form').serialize(), ajaxsuccess)
 				
 				e.preventDefault()
 			})
