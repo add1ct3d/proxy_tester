@@ -71,6 +71,8 @@
 					<button class="btn btn-success" id="readmore">Read More</button>
 				</p>
 				<table class="table">
+					<col style="width:30%">
+					<col style="width:70%">
 					<thead>
 						<tr>
 							<th>HTTP Header</th>
@@ -116,7 +118,7 @@
 
 				$('#refresh-icon').css('display', 'block')
 				
-				$.post('http://shiuhsenang.com:9000/check', $('form').serialize(), ajaxsuccess)
+				$.post('/proxy_tester/check', $('form').serialize(), ajaxsuccess)
 				
 				e.preventDefault()
 			})
